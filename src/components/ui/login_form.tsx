@@ -1,8 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { handleGoogleLogin } from "../../axios/api";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const navigate = useNavigate();
+
+  function handleGoogle() {
+    handleGoogleLogin();
+  }
+
+  useEffect(() => {
+    console.log(isLoggedin);
+    const accessTokenRegex = /access_token=([^&]+)/;
+    const isMatch = window.location.href.match(accessTokenRegex);
+    if (isLoggedin) {
+      navigate("/dashboard");
+    }
+
+    if (isMatch) {
+      const accessToken = isMatch[1];
+      Cookies.set("access_token", accessToken);
+    }
+    setIsLoggedin(true);
+  }, []);
 
   return (
     <div className="StyledWrapper col-span-1 position-absolute">
@@ -10,7 +32,7 @@ export default function LoginForm() {
         <p>
           Bienvenido,<span>inicia sesión para continuar</span>
         </p>
-        <button className="oauthButton">
+        <button className="oauthButton" type="button" onClick={handleGoogle}>
           <svg className="icon" viewBox="0 0 24 24">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -31,41 +53,6 @@ export default function LoginForm() {
             <path d="M1 1h22v22H1z" fill="none" />
           </svg>
           Continue with Google
-        </button>
-        <div className="separator">
-          <div />
-          <span>OR</span>
-          <div />
-        </div>
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="oauthButton" type="submit" onClick={async () => {}}>
-          Continue
-          <svg
-            className="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width={24}
-            height={24}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="m6 17 5-5-5-5" />
-            <path d="m13 17 5-5-5-5" />
-          </svg>
         </button>
       </form>
     </div>

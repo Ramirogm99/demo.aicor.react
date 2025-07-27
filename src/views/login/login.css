@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 #root {
   height: 100vh;
   min-width: 100vw;
@@ -28,7 +27,7 @@
   bottom: 0;
   right: 0;
   margin: auto;
-  height: 60vh;
+  height: 30vh;
   width: 25vw;
   border-radius: 5px;
   border: 2px solid var(--main-color);
@@ -135,4 +134,16 @@
 .icon {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.cart-button {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: transparent;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }

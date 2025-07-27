@@ -1,5 +1,5 @@
 import "./login.css";
-import LoginLayout from "../../components/layout/LoginLayout";
+import LoginLayout from "../../../LoginLayout";
 import LoginForm from '../../components/ui/login_form';
 
 function Login() {
