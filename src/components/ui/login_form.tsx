@@ -12,19 +12,17 @@ export default function LoginForm() {
   }
 
   useEffect(() => {
-    console.log(isLoggedin);
     const accessTokenRegex = /access_token=([^&]+)/;
     const isMatch = window.location.href.match(accessTokenRegex);
-    if (isLoggedin) {
-      navigate("/dashboard");
-    }
-
     if (isMatch) {
       const accessToken = isMatch[1];
       Cookies.set("access_token", accessToken);
+      setIsLoggedin(true);
     }
-    setIsLoggedin(true);
-  }, []);
+    if (isLoggedin) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedin]);
 
   return (
     <div className="StyledWrapper col-span-1 position-absolute">
